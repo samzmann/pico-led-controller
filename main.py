@@ -7,7 +7,8 @@ CLK_PIN = Pin(0, Pin.IN, Pin.PULL_UP)
 DT_PIN = Pin(1, Pin.IN, Pin.PULL_UP)
 SW_PIN = Pin(2, Pin.IN, Pin.PULL_UP)
 
-prevVal = CLK_PIN.value()
+prevRotaryVal = CLK_PIN.value()
+prevButtonVal = SW_PIN.value()
 
 last5Ticks = [0]
 
@@ -92,12 +93,12 @@ def updateCounterForMode(increment):
         return incrementBrightness(increment)
 
 def rotaryChanged():
-    global prevVal
+    global prevRotaryVal
     
     val = CLK_PIN.value()
     
     
-    if val != prevVal:
+    if val != prevRotaryVal:
         addTickTimestamp(utime.ticks_ms())
         print('avgTimeBetweenLast5Ticks', avgTimeBetweenLast5Ticks())
         
@@ -114,9 +115,9 @@ def rotaryChanged():
         updateCounterForMode(increment)
         updateStrip(hue, saturation, brightness)
             
-        prevVal = val
+        prevRotaryVal = val
 
-    if SW_PIN.value() == 0:
+    if SW_PIN.value() == 0 and SW_PIN.value() !=prevButtonVal:
         changeMode()
         utime.sleep_ms(200)
         

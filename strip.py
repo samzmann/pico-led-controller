@@ -2,7 +2,7 @@ from machine import Pin
 from neopixel import Neopixel
 import math
 
-NUM_LEDS = 5
+NUM_LEDS = 12
 STATE_MACHINE = 0
 STRIP_PIN = 5
 
